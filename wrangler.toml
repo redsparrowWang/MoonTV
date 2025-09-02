@@ -3,3 +3,8 @@ pages_build_output_dir = ".vercel/output/static"
 
 compatibility_date = "2025-09-02"
 compatibility_flags = ["nodejs_compat"]
+
+[[d1_databases]]
+binding = "DB"
+database_name = "moontvdb"
+database_id = "ca3b9f27-6c3b-42fa-a65c-8cfb325e0fec"
