@@ -1,2 +1,5 @@
+name = "MoonTV"
+pages_build_output_dir = ".vercel/output/static"
+
 [compatibility_flags]
 nodejs_compat = true
