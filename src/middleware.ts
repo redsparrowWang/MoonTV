@@ -7,6 +7,34 @@ import { getAuthInfoFromCookie } from '@/lib/auth';
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
+  // --- 新增的地区认证逻辑 ---
+  const country = request.headers.get('cf-ipcountry');
+  const allowedCountry = 'JP'; // 允许访问的国家/地区代码，例如 'JP' 表示日本
+
+  // 如果请求来自不允许的国家/地区，则拒绝访问
+  if (country !== allowedCountry) {
+    // 可以返回一个自定义的 404 页面来混淆视听
+    return new NextResponse(
+      `
+      <html>
+        <head><title>Site can't be reached</title></head>
+        <body>
+          <h1>This site can't be reached</h1>
+          <p>The webpage at <code>${request.url}</code> might be temporarily down or it may have moved permanently to a new web address.</p>
+          <p>ERR_TUNNEL_CONNECTION_FAILED</p>
+        </body>
+      </html>
+      `,
+      {
+        status: 404,
+        headers: {
+          'content-type': 'text/html',
+        },
+      }
+    );
+  }
+  // --- 区域认证逻辑结束 ---
+  
   // 跳过不需要认证的路径
   if (shouldSkipAuth(pathname)) {
     return NextResponse.next();
